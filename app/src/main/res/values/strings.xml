@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">M8_EndevinaNum</string>
+    <string name="label01">Introueix un numero!</string>
+    <string name="inputNum">inputNum</string>
+    <string name="intentsNum">Intents: </string>
+    <string name="xuleta">xuleta</string>
+    <string name="btnText">Prova-ho!</string>
+</resources>
