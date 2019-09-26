@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tv;
     TextView tvx;
     Button btnProva;
+    boolean fet;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -33,37 +34,48 @@ public class MainActivity extends AppCompatActivity {
         et = (EditText) findViewById(R.id.inputNum);
         tv = (TextView) findViewById(R.id.intentsNum);
         tvx = (TextView) findViewById(R.id.xuleta);
+        btnProva = (Button) findViewById(R.id.btnProva);
+
+        fet = false;
 
         tv.setText("intents:"+numIntents);
-        tvx.setText(""+numEndivina);
+        tvx.setText("xuleta: "+numEndivina);
 
 
     }
 
 
     public void clickBoto(View v) {
-        if (et.getText().toString().isEmpty()) {
+        if (fet) {
+            btnProva.setText(R.string.btnText);
+            tv.setText("intents:"+numIntents);
+            tvx.setText("xuleta: "+numEndivina);
+            et.setText("");
+            fet = false;
+        }
+
+        else if (et.getText().toString().isEmpty()) {
             Toast.makeText(this, "Introdueix un nombre!", Toast.LENGTH_SHORT).show();
             et.setText("");
         }
 
         else if (Integer.parseInt(et.getText().toString()) == numEndivina) {
-            Toast.makeText(this, "Enhorabona!", Toast.LENGTH_SHORT).show();
-
             numEndivina = (int) (Math.random() * 10);
-            tvx.setText(""+numEndivina);
+
+            tv.setText("Cgtz! It took you "+ ++numIntents+ (numIntents == 1 ? " attemp :)":" attemps :)"));
+            btnProva.setText("Reinicia");
+            fet = true;
 
             numIntents = 0;
-            tv.setText("intents:"+numIntents);
 
         } else if (Integer.parseInt(et.getText().toString()) > numEndivina) {
             Toast.makeText(this, "El numero ha de ser més petit!", Toast.LENGTH_SHORT).show();
-            tv.setText("intents: " + ++numIntents);
+            tv.setText("intents:"+ ++numIntents);
             et.setText("");
 
         } else if (Integer.parseInt(et.getText().toString()) < numEndivina) {
             Toast.makeText(this, "El numero ha de ser més gran!", Toast.LENGTH_SHORT).show();
-            tv.setText("intents: " + ++numIntents);
+            tv.setText("intents: "+ ++numIntents);
             et.setText("");
         }
 
