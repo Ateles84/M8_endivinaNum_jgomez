@@ -3,8 +3,6 @@ package com.example.m8_endevinanum;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,13 +12,15 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    public int numEndivina;
-    public int numIntents;
-    public EditText et;
-    public TextView tv;
-    public TextView tvx;
-    public Button btnProva;
-    boolean fet;
+    int numEndivina;
+    static int numIntents;
+    EditText et;
+    TextView tv;
+    TextView tvx;
+    Button btnProva;
+    SQLiteManager sql;
+    String nom;
+    boolean fet = false;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -29,17 +29,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         numIntents = 0;
-        numEndivina = (int) (Math.random() * 10);
+        numEndivina = (int) (Math.random() * 100 + 1);
 
         et = (EditText) findViewById(R.id.inputNum);
         tv = (TextView) findViewById(R.id.intentsNum);
         tvx = (TextView) findViewById(R.id.xuleta);
         btnProva = (Button) findViewById(R.id.btnProva);
 
-        fet = false;
-
         tv.setText("intents:" + numIntents);
         tvx.setText("xuleta: " + numEndivina);
+
+        SQLiteManager sql = new SQLiteManager(this, SQLiteManager.DATABASE_NAME, null, SQLiteManager.DATABASE_VERSION);
 
     }
 
@@ -50,23 +50,23 @@ public class MainActivity extends AppCompatActivity {
             tvx.setText("xuleta: " + numEndivina);
             et.setText("");
             fet = false;
+
         } else if (et.getText().toString().isEmpty()) {
             Toast.makeText(this, "Introdueix un nombre!", Toast.LENGTH_SHORT).show();
             et.setText("");
         } else if (Integer.parseInt(et.getText().toString()) == numEndivina) {
-            numEndivina = (int) (Math.random() * 10);
+            numEndivina = (int) (Math.random() * 100 + 1);
 
-            tv.setText("Cgtz! It took you " + ++numIntents + (numIntents == 1 ? " attemp :)" : " attemps :)"));
+            numIntents++;
+
+            tv.setText("Cgtz! It took you " + numIntents + (numIntents == 1 ? " attemp :)" : " attemps :)"));
             btnProva.setText("Reinicia");
-            fet = true;
 
             numIntents = 0;
 
-            testDialog test01 = new testDialog();
+            TestDialog test01 = new TestDialog();
 
             test01.show(getSupportFragmentManager(), "prova");
-
-            canviarAHOF();
 
         } else if (Integer.parseInt(et.getText().toString()) > numEndivina) {
             Toast.makeText(this, "El numero ha de ser més petit!", Toast.LENGTH_SHORT).show();
@@ -82,10 +82,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void canviarAHOF() {
-        Intent lol = new Intent(getApplicationContext() , HoFActivity.class);
-        
-        startActivity(lol);
-    }
 
 }

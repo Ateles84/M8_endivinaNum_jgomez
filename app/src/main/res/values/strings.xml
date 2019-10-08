@@ -6,5 +6,8 @@
     <string name="btnText">Prova-ho!</string>
     <string name="inputNom">Introdueix el teu nom!</string>
     <string name="merda"></string>
-    <string name="regHOF">Registrar al HoF</string>
+    <string name="regHOF">Registrar al HoF?</string>
+    <string name="sibtn">Si!</string>
+    <string name="nobtn">No</string>
+    <string name="tornaBtn">Torna al main</string>
 </resources>
