@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.sql.PreparedStatement;
+
 public class SQLiteManager extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
@@ -34,12 +36,26 @@ public class SQLiteManager extends SQLiteOpenHelper {
 */
     }
 
-    public boolean insertarDades(String nom, int intents) {
+    public boolean insertarDades(String nomm, int intents) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put("nom",nom);
+        PreparedStatement ps = null;
+
+        String query = "SELECT nom FROM records WHERE nom = ?";
+
+
+
+        cv.put("nom",nomm);
         cv.put("intents",intents);
+
+        db = this.getWritableDatabase();
+
+        Cursor c = db.rawQuery(("SELECT nom FROM records WHERE nom = \" " + nomm+ "\""),null);
+
+        if (c.getCount() > 0) {
+            db.delete("records",("nom = \" "+nomm+"\""),null);
+        }
 
         System.out.println("lololol");
 

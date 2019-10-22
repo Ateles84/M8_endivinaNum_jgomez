@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     Button btnProva;
     SQLiteManager sql;
     String nom;
-    boolean fet = false;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -44,14 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickBoto(View v) {
-        if (fet) {
-            btnProva.setText(R.string.btnText);
-            tv.setText("intents:" + numIntents);
-            tvx.setText("xuleta: " + numEndivina);
-            et.setText("");
-            fet = false;
-
-        } else if (et.getText().toString().isEmpty()) {
+        if (et.getText().toString().isEmpty()) {
             Toast.makeText(this, "Introdueix un nombre!", Toast.LENGTH_SHORT).show();
             et.setText("");
         } else if (Integer.parseInt(et.getText().toString()) == numEndivina) {
@@ -63,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
             btnProva.setText("Reinicia");
 
             numIntents = 0;
+
+            btnProva.setText(R.string.btnText);
+            tv.setText("intents:" + numIntents);
+            tvx.setText("xuleta: " + numEndivina);
+            et.setText("");
 
             TestDialog test01 = new TestDialog();
 
