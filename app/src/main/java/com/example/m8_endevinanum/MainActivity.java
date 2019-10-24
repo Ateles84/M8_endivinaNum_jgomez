@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
             tv.setText("Cgtz! It took you " + numIntents + (numIntents == 1 ? " attemp :)" : " attemps :)"));
             btnProva.setText("Reinicia");
 
-            numIntents = 0;
-
             btnProva.setText(R.string.btnText);
             tv.setText("intents:" + numIntents);
             tvx.setText("xuleta: " + numEndivina);

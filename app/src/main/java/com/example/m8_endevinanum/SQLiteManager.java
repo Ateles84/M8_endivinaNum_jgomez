@@ -68,6 +68,6 @@ public class SQLiteManager extends SQLiteOpenHelper {
     public Cursor getDades() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        return db.rawQuery("SELECT * FROM records ORDER BY intents DESC",null);
+        return db.rawQuery("SELECT * FROM records ORDER BY intents ASC",null);
     }
 }

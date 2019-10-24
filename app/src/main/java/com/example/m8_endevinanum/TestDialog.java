@@ -31,6 +31,7 @@ public class TestDialog extends AppCompatDialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 new SQLiteManager(getContext(), SQLiteManager.DATABASE_NAME, null, SQLiteManager.DATABASE_VERSION).insertarDades(et.getText().toString(), MainActivity.numIntents);
+                MainActivity.numIntents = 0;
                 Intent intent = new Intent(getContext(), HoFActivity.class);
                 startActivity(intent);
             }

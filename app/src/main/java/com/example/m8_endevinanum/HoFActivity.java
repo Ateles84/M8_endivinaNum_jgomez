@@ -42,7 +42,7 @@ public class HoFActivity extends AppCompatActivity {
         } else {
             int i = 1;
             while (c.moveToNext()) {
-                ar.add((i++)+". "+c.getString(0)+" -- "+c.getInt(1));
+                ar.add((i++)+". "+c.getString(c.getColumnIndex("nom"))+" -- "+c.getInt(c.getColumnIndex("intents")));
             }
         }
 
@@ -50,7 +50,7 @@ public class HoFActivity extends AppCompatActivity {
 
         lv.setAdapter(ara);
 
-
+        c.close();
     }
 
     public void clickBtnTorna(View v) {
