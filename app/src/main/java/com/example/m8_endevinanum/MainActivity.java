@@ -3,7 +3,11 @@ package com.example.m8_endevinanum;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,14 +16,16 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    int numEndivina;
+
     static int numIntents;
+    static boolean volFoto;
+    static Bitmap bmap;
+
+    int numEndivina;
     EditText et;
     TextView tv;
     TextView tvx;
     Button btnProva;
-    SQLiteManager sql;
-    String nom;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -37,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
         tv.setText("intents:" + numIntents);
         tvx.setText("xuleta: " + numEndivina);
+        volFoto = false;
 
-        SQLiteManager sql = new SQLiteManager(this, SQLiteManager.DATABASE_NAME, null, SQLiteManager.DATABASE_VERSION);
+        //sql.onUpgrade(sql.getWritableDatabase(), 1, 2);
 
     }
 
@@ -59,7 +66,15 @@ public class MainActivity extends AppCompatActivity {
             tvx.setText("xuleta: " + numEndivina);
             et.setText("");
 
-            TestDialog test01 = new TestDialog();
+            Bitmap temp = bmap;
+
+            Toast.makeText(this, "Si no vols fer la foto sortira una per defecte", Toast.LENGTH_LONG).show();
+
+            dispatchTakePictureIntent();
+
+            if (bmap == temp) bmap = BitmapFactory.decodeResource(getResources(), R.drawable.xdefecte);
+
+            DialogHOF test01 = new DialogHOF();
 
             test01.show(getSupportFragmentManager(), "prova");
 
@@ -75,6 +90,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            bmap = (Bitmap) extras.get("data");
+        }
     }
 
 
